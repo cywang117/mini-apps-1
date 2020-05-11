@@ -1,0 +1,14 @@
+{
+  "name": "rpt21-mini-apps-1",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "start-1": "live-server ./challenge_1/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cywang117/rpt21-mini-apps-1.git"
+  },
+  "author": "",
+  "license": "ISC"
+}
