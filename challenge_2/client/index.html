@@ -1,2 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>JSON to CSV Converter</title>
+  <link href="style.css" rel="stylesheet"></link>
+</head>
 
+<body>
+  <div id="app">
+    <header>
+      <h1>JSON to CSV Converter</h1>
+    </header>
+    <section>
+      <form id="form" method="POST" action="/convert">
+        <div id="inline-fp">
+          <label for="file-picker">Upload a file:</label>
+          <input type="file" id="file-picker" accept="application/json">
+        </div>
+
+        <label for="data-field">Or copy & paste your JSON data:</label>
+        <textarea id="data-field"></textarea>
+
+        <p id="message"></p>
+
+        <input type="submit" id="submit">
+      </form>
+
+      <aside>
+        <h4>Previous Conversions:</h4>
+        <div id="download-list">
+        </div>
+      </aside>
+    </section>
+  </div> <!-- End #app -->
+  <script src="app.js"></script>
+</body>
+</html>
 
