@@ -13,11 +13,12 @@ class GeneratorModel {
 
     this.state = {
       errMessage: '',
-      converted: []
+      successMessage: '',
+      converted: [],
+      latest: null
     }
 
     this.setState = this.setState.bind(this);
-    this.verifyJSONData = this.verifyJSONData.bind(this);
     this.getConverted = this.getConverted.bind(this);
     this.postJSONData = this.postJSONData.bind(this);
     this.getConverted();
@@ -27,7 +28,7 @@ class GeneratorModel {
   setState(newState) {
     for (let key of Object.keys(newState)) {
       if (Array.isArray(newState[key])) {
-        this.state[key] = newState[key].slice();
+        this.state[key] = [ ...newState[key] ];
       } else if (typeof newState[key] === 'object') {
         this.state[key] = { ...newState[key] };
       } else {
@@ -37,59 +38,47 @@ class GeneratorModel {
     this.View.render({ ...this.state });
   }
 
-  // Verifies data as JSON string
-  verifyJSONData(dataStr, fileName) {
-    try {
-      let data = JSON.parse(dataStr);
-    } catch (e) {
-      this.setState({ errMessage: 'Invalid JSON' });
-      return false;
-    }
-    return true;
-  }
-
   // Gets already-converted files
   // TODO: Gets only the converted files of current user (sessions)
-  getConverted() {
-    fetch('http://localhost:3000/download')
-      .then(res => {
-        return res.json();
-      })
-      .then(({ converted }) => {
-        this.setState({ converted });
-      })
-      .catch(err => {
-        console.error(err);
-      });
+  async getConverted() {
+    try {
+      let result = await fetch('http://localhost:3000/download');
+      let resultJSON = await result.json();
+      this.setState(resultJSON);
+    } catch(e) {
+      console.error(e);
+    }
   }
 
   // Posts valid JSON string to server, updating view on post success
-  postJSONData(dataStr, fileName) {
-    if (this.verifyJSONData(dataStr, fileName)) {
-      let request = new Request(this.server, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          jsonStr: dataStr,
-          fileName
-        })
-      });
+  // Returns boolean indicating post success
+  async postJSONData(dataStr, fileName) {
+    try {
+      JSON.parse(dataStr);
+    } catch(e) {
+      return false;
+    }
 
-      return fetch(request).then(res => {
-          if (!res.ok) {
-            throw res.statusText;
-          }
-        })
-        .then(() => {
-          this.getConverted();
-        })
-        .catch(err => {
-          console.error('Error fetching: ', err);
-        });
+    let request = new Request(this.server, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        jsonStr: dataStr,
+        fileName
+      })
+    });
+
+    let result = await fetch(request);
+    if (!result.ok) {
+      console.error('Error fetching: ', result.statusText);
+      return false;
     } else {
-      return Promise.reject();
+      let uploadedFileName = await result.text();
+      this.setState({ latest: uploadedFileName });
+      this.getConverted();
+      return true;
     }
   }
 }
@@ -101,31 +90,45 @@ class GeneratorView {
     this.formField = document.querySelector('#form');
     this.textarea = document.querySelector('#data-field');
     this.filePicker = document.querySelector('#file-picker');
-    this.errDisplay = document.querySelector('#message');
+    this.msgDisplay = document.querySelector('#message');
+    this.latestDownload = document.querySelector('#latest-conversion');
     this.downloadList = document.querySelector('#download-list');
     this.curState = null;
 
     this.render = this.render.bind(this);
-    this.createLinkNode = this.createLinkNode.bind(this);
-    this.removeTextareaText = this.removeTextareaText.bind(this);
+    this.removeFormFieldInputs = this.removeFormFieldInputs.bind(this);
   }
 
   // Compares newState to current state, updating only keys that have changed
   render(newState) {
     if (!this.curState) {
-      this.curState = Object.assign({}, newState);
+      this.curState = { ...newState };
     }
 
     if (this.curState.errMessage !== newState.errMessage) {
       this.curState.errMessage = newState.errMessage;
-      this.errDisplay.textContent = newState.errMessage;
+      this.msgDisplay.textContent = newState.errMessage;
+      this.msgDisplay.style.color = 'red';
     }
 
-    if (!checkDeepEqualsArrays(this.curState.converted, newState.converted)) {
-      this.curState.converted = newState.converted.slice();
+    if (this.curState.successMessage !== newState.successMessage && this.curState.errMessage === '') {
+      this.curState.successMessage = newState.successMessage;
+      this.msgDisplay.textContent = newState.successMessage;
+      this.msgDisplay.style.color = 'green';
     }
 
-    // TODO: Don't recreate a nodes for each state update
+    if (this.curState.latest !== newState.latest) {
+      this.curState.latest = newState.latest;
+      let latestDownloadLink = this.createLinkNode(this.curState.latest);
+      this.latestDownload.innerHTML = '';
+      this.latestDownload.append(latestDownloadLink);
+    }
+
+    if (!checkShallowArrayEquality(this.curState.converted, newState.converted)) {
+      this.curState.converted = [ ...newState.converted ];
+    }
+
+    // TODO: Don't recreate <a> nodes for each state update
     this.downloadList.innerHTML = '';
     this.curState.converted.forEach(fileName => {
       this.downloadList.prepend(this.createLinkNode(fileName));
@@ -140,8 +143,9 @@ class GeneratorView {
     return linkToFile;
   }
 
-  removeTextareaText() {
+  removeFormFieldInputs() {
     this.textarea.value = '';
+    this.filePicker.value = '';
   }
 }
 
@@ -160,7 +164,7 @@ class GeneratorController {
   handleSubmit(e) {
     e.preventDefault();
     let dataStr = this.View.textarea.value;
-    let file = this.View.filePicker.files[0]
+    let file = this.View.filePicker.files[0];
 
     // File uploaded
     if (file) {
@@ -172,35 +176,33 @@ class GeneratorController {
 
       // Both input types are empty
     } else {
-      this.Model.setState({ errMessage: 'Must paste or upload a JSON file' });
+      this.Model.setState({ errMessage: 'Must paste or upload a JSON file', successMessage: '' });
     }
   }
 
-  handleFileSubmit(file) {
+  async handleFileSubmit(file) {
     // Ensure file is JSON
     if (file.type !== 'application/json') {
-      this.Model.setState({ errMessage: 'File must be type .json' });
+      this.Model.setState({ errMessage: 'File must be type .json', successMessage: '' });
       return;
     } else {
-      this.Model.setState({ errMessage: '' });
       // Parse into text with Promise-based Blob(File inheritor).text()
-      file.text()
-        .then(text => {
-          this.Model.postJSONData(text, file.name.slice(0, file.name.length - 5));
-        })
-        .catch(console.error);
+      let text = await file.text();
+      this.Model.postJSONData(text, file.name.slice(0, file.name.length - 5));
+      this.Model.setState({ errMessage: '', successMessage: 'Conversion complete' });
     }
+    this.View.removeFormFieldInputs();
   }
 
-  handleTextareaSubmit(dataStr) {
-    this.Model.postJSONData(dataStr, Date.now().toString())
-      .then(() => {
-        // Only removes err message on successful post, since postJSONData can take an invalid dataStr
-        this.Model.setState({ errMessage: '' });
-      })
-      .catch(() => { });
-
-    this.View.removeTextareaText();
+  async handleTextareaSubmit(dataStr) {
+    let isPostSuccessful = await this.Model.postJSONData(dataStr, Date.now().toString());
+    if (isPostSuccessful) {
+      // Only removes err message on successful post, since postJSONData can take an invalid dataStr
+      this.Model.setState({ errMessage: '', successMessage: 'Conversion complete' });
+    } else {
+      this.Model.setState({ errMessage: 'Invalid JSON in text area', successMessage: '' });
+    }
+    this.View.removeFormFieldInputs();
   }
 }
 
@@ -219,7 +221,6 @@ class App {
   }
 }
 
-
 // Init
 window.onload = () => {
   // MVC are technically not globally scoped but still accessible through App -- better way?
@@ -231,12 +232,12 @@ window.onload = () => {
 
 // Utils
 /**
- * Checks if two arrays (WITHOUT NESTING) are deeply equal
+ * Checks if two arrays (WITHOUT NESTING) are equal
  * @param {Array} arr1
  * @param {Array} arr2
  * @returns {boolean}
  */
-const checkDeepEqualsArrays = (arr1, arr2) => {
+const checkShallowArrayEquality = (arr1, arr2) => {
   if (arr1.length !== arr2.length) return false;
   // Convert to Set to handle identical content not in same order (for whatever reason)
   let set2 = new Set(arr2);
