@@ -1,6 +1,14 @@
 # Hack Reactor: Mini Apps 1 Sprint
 This README lists specs completed as specified on GLearn.
 
+## Table of Contents
+* [Tic Tac Toe](#challenge-1-tic-tac-toe)
+* [CSV Report Generator](#challenge-2-csv-report-generator)
+* [Multistep Checkout Experience](#challenge-3-multistep-checkout-experience)
+* [Connect Four](#challenge-4-connect-four)
+* [Checkers](#challenge-5-checkers)
+* [Battleship](#challenge-6-battleship)
+
 ---
 
 ## Challenge 1: Tic Tac Toe
