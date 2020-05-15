@@ -24,7 +24,7 @@ This README lists specs completed as specified on GLearn.
 
 <br/>
 
-- [ ] Keep track of the winner from the last round and allow the winner (X or O) to make the first move on the next round of gameplay.
+- [x] Keep track of the winner from the last round and allow the winner (X or O) to make the first move on the next round of gameplay.
 
 <br/>
 

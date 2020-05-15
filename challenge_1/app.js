@@ -15,7 +15,10 @@ class Game {
   // Model constructor: constructor(view, turn = 'X', score = [0, 0], players = ['X', 'O'])
   resetBoard() {
     this.View = new GameView();
-    this.Model = new GameModel(this.View, this.Model.state.players[0], this.Model.state.score, this.Model.state.players);
+    let score = this.Model.getScore();
+    let players = this.Model.getPlayers();
+    // If winner from last round, allow winner to go first
+    this.Model = new GameModel(this.View, this.Model.hasWinner() ? this.Model.getTurn() : players[0], score, players);
     this.Controller.Model = this.Model;
   }
 

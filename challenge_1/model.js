@@ -33,6 +33,18 @@ class GameModel {
     return this.state.players.indexOf(this.state.turn) ? [this.state.players[0], 0] : [this.state.players[1], 1];
   }
 
+  getScore() {
+    return this.state.score.slice();
+  }
+
+  getPlayers() {
+    return this.state.players.slice();
+  }
+
+  getTurn() {
+    return this.state.turn;
+  }
+
   isSquareEmpty(idx) {
     return this.state.board[idx] === '';
   }
@@ -41,6 +53,7 @@ class GameModel {
     return this.state.winnerFound;
   }
 
+  // Returns array of 3 indexes if winner, else empty array
   getWinner(board) {
     return this.winningIdxs.reduce((acc, triplet) => {
       let [f, s, t] = triplet;
