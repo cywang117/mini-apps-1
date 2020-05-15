@@ -40,11 +40,11 @@ This README lists specs completed as specified on GLearn.
 
 <br/>
 
-- [ ] If not already done, refactor all your presentation code so that it lives in one module or object.
+- [x] If not already done, refactor all your presentation code so that it lives in one module or object.
 
 <br/>
 
-- [ ] If not already done, refactor all code related to user input so that this code lives in one module or object.
+- [x] If not already done, refactor all code related to user input so that this code lives in one module or object.
 
 <br/>
 
@@ -52,7 +52,7 @@ This README lists specs completed as specified on GLearn.
 
 <br/>
 
-- [ ] If not already done, move your CSS into an external style sheet.
+- [x] If not already done, move your CSS into an external style sheet.
 
 <br/>
 
@@ -68,23 +68,23 @@ This README lists specs completed as specified on GLearn.
 
 <br/>
 
-- [ ]  Use one more ES6 class for managing state, move it into its own file and instantiate an instance of this class for each round of gameplay.
+- [x]  Use one more ES6 class for managing state, move it into its own file and instantiate an instance of this class for each round of gameplay.
 
 <br/>
 
-- [ ]  Use one more ES6 class for managing presentation logic, move it into its own file and instantiate an instance of this class for each round of gameplay.
+- [x]  Use one more ES6 class for managing presentation logic, move it into its own file and instantiate an instance of this class for each round of gameplay.
 
 <br/>
 
-- [ ]  Use one more ES6 class for managing user input, move it into its own file and instantiate an instance of this class for each round of gameplay.
+- [x]  Use one more ES6 class for managing user input, move it into its own file and instantiate an instance of this class for each round of gameplay.
 
 <br/>
 
-- [ ]  Refactor your app to not use any global variables, except for the classes created in the previous steps.
+- [x]  Refactor your app to not use any global variables, except for the classes created in the previous steps.
 
 <br/>
 
-- [ ]  Refactor your app to not make use of any closure variables. All functions should be pure functions, meaning all their dependencies are supplied as inputs.
+- [x]  Refactor your app to not make use of any closure variables. All functions should be pure functions, meaning all their dependencies are supplied as inputs.
 
 <br/>
 

@@ -1,0 +1,80 @@
+class GameModel {
+  constructor(view, turn = 'X', score = [0, 0], players = ['X', 'O']) {
+    this.View = view;
+    this.winningIdxs = [
+      [0, 1, 2],
+      [3, 4, 5],
+      [6, 7, 8],
+      [0, 3, 6],
+      [1, 4, 7],
+      [2, 5, 8],
+      [0, 4, 8],
+      [2, 4, 6]
+    ];
+    this.state = {
+      turn,
+      score,
+      players,
+      board: new Array(9).fill(''),
+      movesLeft: 9,
+      winnerFound: false,
+      winningIdx: null
+    };
+
+    this.View.render({ ...this.state });
+  }
+
+  // Getters
+  getCurrentPlayerAndIdx() {
+    return [this.state.turn, this.state.players.indexOf(this.state.turn)];
+  }
+
+  getNextPlayerAndIdx() {
+    return this.state.players.indexOf(this.state.turn) ? [this.state.players[0], 0] : [this.state.players[1], 1];
+  }
+
+  isSquareEmpty(idx) {
+    return this.state.board[idx] === '';
+  }
+
+  hasWinner() {
+    return this.state.winnerFound;
+  }
+
+  getWinner(board) {
+    return this.winningIdxs.reduce((acc, triplet) => {
+      let [f, s, t] = triplet;
+      if (
+        board[f] === board[s] &&
+        board[s] === board[t] &&
+        board[f] === board[t] &&
+        board[f] !== ''
+      ) {
+        return triplet;
+      } else return acc;
+    }, []);
+  }
+
+  // Setters
+  setState(squareId) {
+    // Given a changed square id in the board, update Model state,
+    // handling internal state changes, then rendering
+
+    // Update board state & check winner
+    let [curPlayer, curIdx] = this.getCurrentPlayerAndIdx();
+    let [nxtPlayer, nxtIdx] = this.getNextPlayerAndIdx();
+    this.state.board[squareId] = curIdx === 0 ? 'X' : 'O';
+    let winnerIdxIfPresent = this.getWinner(this.state.board);
+    if (winnerIdxIfPresent.length) {
+      this.state.winnerFound = true;
+      this.state.winningIdx = winnerIdxIfPresent;
+      this.state.score[curIdx]++;
+    } else {
+      // If no winner, toggle turn & decrement moves
+      this.state.turn = nxtPlayer;
+      this.state.movesLeft--;
+    }
+
+    this.View.render({ ...this.state });
+  }
+}
