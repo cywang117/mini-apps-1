@@ -20,8 +20,7 @@
           "county": "San Mateo",
           "city": "Redwood City",
           "role": "Sales Person",
-          "sales": 4800000,
-          "children": []
+          "sales": 4800000
         },
         {
           "firstName": "Allen",
@@ -29,8 +28,7 @@
           "county": "San Mateo",
           "city": "Burlingame",
           "role": "Sales Person",
-          "sales": 2500000,
-          "children": []
+          "sales": 2500000
         }
       ]
     },

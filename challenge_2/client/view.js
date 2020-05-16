@@ -4,6 +4,7 @@ class GeneratorView {
     this.formField = document.querySelector('#form');
     this.textarea = document.querySelector('#data-field');
     this.filePicker = document.querySelector('#file-picker');
+    this.filterInput = document.querySelector('#filter-input');
     this.msgDisplay = document.querySelector('#message');
     this.latestDownload = document.querySelector('#latest-conversion');
     this.downloadList = document.querySelector('#download-list');
@@ -60,5 +61,6 @@ class GeneratorView {
   removeFormFieldInputs() {
     this.textarea.value = '';
     this.filePicker.value = '';
+    this.filterInput.value = '';
   }
 }

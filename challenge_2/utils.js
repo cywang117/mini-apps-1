@@ -3,12 +3,12 @@
  * @param {Object} json
  * @returns {string}
  */
-const convertJSONToCSV = (json) => {
+const convertJSONToCSV = (json, filterVal) => {
   let keys = Object.keys(json).filter(key => key !== 'children');
   keys.unshift('id', 'parentId');
   let csvHeaders = keys.join(',') + '\n';
 
-  return csvHeaders + _convertSingleJSONToCSVRecur(json, keys);
+  return csvHeaders + _convertSingleJSONToCSVRecur(json, keys, filterVal);
 };
 
 /**
@@ -17,25 +17,35 @@ const convertJSONToCSV = (json) => {
    * @param {Array} keys: for ensuring same order in each object call
    * @returns {string}
    */
-const _convertSingleJSONToCSVRecur = (obj, keys, id = 0, parentId = '') => {
+const _convertSingleJSONToCSVRecur = (obj, keys, filterVal = null, idObj = { id: 0 }, parentId = '') => {
   let csvStr = '';
-  let objId = id;
-  keys.forEach((key, idx) => {
-    if (key === 'id') {
-      csvStr += `${objId},`;
-    } else if (key === 'parentId') {
-      csvStr += `${parentId},`;
-    } else {
-      csvStr += obj[key];
-      if (idx !== keys.length - 1) {
-        csvStr += ',';
+  let filterValPresent = filterVal && filterVal.length && Object.values(obj).some(val => val.toString().includes(filterVal));
+
+  if (!filterValPresent) {
+    let currentId = idObj.id;
+
+    keys.forEach((key, idx) => {
+      if (key === 'id') {
+        csvStr += `${currentId},`;
+      } else if (key === 'parentId') {
+        csvStr += `${parentId},`;
+      } else {
+        csvStr += obj[key];
+        if (idx !== keys.length - 1) {
+          csvStr += ',';
+        }
       }
-    }
-  });
-  csvStr += '\n';
-  obj.children.forEach(childObj => {
-    csvStr += _convertSingleJSONToCSVRecur(childObj, keys, ++id, objId);
-  });
+    });
+
+    csvStr += '\n';
+    obj.children && obj.children.forEach(childObj => {
+      idObj.id++;
+      csvStr += _convertSingleJSONToCSVRecur(childObj, keys, filterVal, idObj, currentId);
+    });
+  } else {
+    idObj.id--;
+  }
+
   return csvStr;
 };
 

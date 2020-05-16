@@ -44,11 +44,19 @@ class GeneratorModel {
 
   // Posts valid JSON string to server, updating view on post success
   // Returns boolean indicating post success
-  async postJSONData(dataStr, fileName) {
+  async postJSONData(dataStr, fileName, filterVal) {
     try {
       JSON.parse(dataStr);
     } catch (e) {
       return false;
+    }
+
+    let body = {
+      jsonStr: dataStr,
+      fileName
+    };
+    if (filterVal) {
+      body.filterVal = filterVal;
     }
 
     let request = new Request(this.server, {
@@ -56,10 +64,7 @@ class GeneratorModel {
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({
-        jsonStr: dataStr,
-        fileName
-      })
+      body: JSON.stringify(body)
     });
 
     let result = await fetch(request);

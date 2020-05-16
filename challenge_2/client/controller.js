@@ -13,14 +13,14 @@ class GeneratorController {
     e.preventDefault();
     let dataStr = this.View.textarea.value;
     let file = this.View.filePicker.files[0];
-
+    let filterVal = this.View.filterInput.value;
     // File uploaded
     if (file) {
-      this.handleFileSubmit(file);
+      this.handleFileSubmit(file, filterVal);
 
       // Textarea used
     } else if (dataStr && dataStr.length) {
-      this.handleTextareaSubmit(dataStr);
+      this.handleTextareaSubmit(dataStr, filterVal);
 
       // Both input types are empty
     } else {
@@ -28,7 +28,7 @@ class GeneratorController {
     }
   }
 
-  async handleFileSubmit(file) {
+  async handleFileSubmit(file, filterVal) {
     // Ensure file is JSON
     if (file.type !== 'application/json') {
       this.Model.setState({ errMessage: 'File must be type .json', successMessage: '' });
@@ -36,14 +36,14 @@ class GeneratorController {
     } else {
       // Parse into text with Promise-based Blob(File inheritor).text()
       let text = await file.text();
-      this.Model.postJSONData(text, file.name.slice(0, file.name.length - 5));
+      this.Model.postJSONData(text, file.name.slice(0, file.name.length - 5), filterVal.length ? filterVal : null);
       this.Model.setState({ errMessage: '', successMessage: 'Conversion complete' });
     }
     this.View.removeFormFieldInputs();
   }
 
-  async handleTextareaSubmit(dataStr) {
-    let isPostSuccessful = await this.Model.postJSONData(dataStr, Date.now().toString());
+  async handleTextareaSubmit(dataStr, filterVal) {
+    let isPostSuccessful = await this.Model.postJSONData(dataStr, Date.now().toString(), filterVal.length ? filterVal : null);
     if (isPostSuccessful) {
       // Only removes err message on successful post, since postJSONData can take an invalid dataStr
       this.Model.setState({ errMessage: '', successMessage: 'Conversion complete' });

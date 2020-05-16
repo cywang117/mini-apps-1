@@ -54,6 +54,10 @@ form {
   padding: 20px 50px;
 }
 
+input {
+  outline: none;
+}
+
 #inline-fp {
   display: flex;
   margin-bottom: 20px;

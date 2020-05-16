@@ -28,7 +28,7 @@ app.get('/download/:filename', (req, res) => {
 });
 
 app.post('/', async (req, res) => {
-  let csvStr = convertJSONToCSV(JSON.parse(req.body.jsonStr));
+  let csvStr = convertJSONToCSV(JSON.parse(req.body.jsonStr), req.body.filterVal);
   let dir, fileName;
   try {
     dir = await fs.promises.readdir(path.join(__dirname, 'conversions'))
