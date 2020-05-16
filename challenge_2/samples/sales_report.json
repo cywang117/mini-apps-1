@@ -17,7 +17,6 @@
         {
           "firstName": "Smitty",
           "lastName": "Won",
-          "county": "San Mateo",
           "city": "Redwood City",
           "role": "Sales Person",
           "sales": 4800000

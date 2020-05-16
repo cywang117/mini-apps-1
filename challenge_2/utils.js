@@ -30,7 +30,7 @@ const _convertSingleJSONToCSVRecur = (obj, keys, filterVal = null, idObj = { id:
       } else if (key === 'parentId') {
         csvStr += `${parentId},`;
       } else {
-        csvStr += obj[key];
+        csvStr += obj[key] === undefined ? '' : obj[key];
         if (idx !== keys.length - 1) {
           csvStr += ',';
         }

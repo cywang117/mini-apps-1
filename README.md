@@ -107,7 +107,7 @@ This README lists specs completed as specified on GLearn.
 
 <br/>
 
-- [ ] __Advanced Content__
+- [x] __Advanced Content__
 
 <br/>
 
@@ -119,19 +119,19 @@ This README lists specs completed as specified on GLearn.
 
 <br/>
 
-- [ ] Add a form field that allows the user to enter a string, which, when present will filter (remove from the CSV report) any records that contain that string.
+- [x] Add a form field that allows the user to enter a string, which, when present will filter (remove from the CSV report) any records that contain that string.
 
 <br/>
 
-- [ ] Adjust the generation of unique identifiers such that they remain consecutive (no gaps) even after filtering. Ensure that ID references from the child rows to their respective parents are still correct. If a record is filtered that has children, then all children should also be removed.
+- [x] Adjust the generation of unique identifiers such that they remain consecutive (no gaps) even after filtering. Ensure that ID references from the child rows to their respective parents are still correct. If a record is filtered that has children, then all children should also be removed.
 
 <br/>
 
-- [ ] Allow some fields to be optional; i.e. some items in the JSON data might have fewer attributes. Collate attributes across all items you encounter and where missing, leave those fields blank in final CSV report.
+- [x] Allow some fields to be optional; i.e. some items in the JSON data might have fewer attributes. Collate attributes across all items you encounter and where missing, leave those fields blank in final CSV report.
 
 <br/>
 
-- [ ] Allow the children property to be optional. When omitted it means there are no children.
+- [x] Allow the children property to be optional. When omitted it means there are no children.
 
 <br/>
 
