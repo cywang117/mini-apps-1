@@ -5,6 +5,7 @@ class GameView {
     this.statusMessage = document.getElementById('status');
     this.xScoreDisplay = document.getElementById('x');
     this.oScoreDisplay = document.getElementById('o');
+    this.playerInputs = document.getElementsByClassName('player-input');
   }
   // { turn, score, players, board, movesLeft, winnerFound, winningIdx }
   render(newState) {
@@ -17,6 +18,10 @@ class GameView {
         this.squareNodes[i].innerText = this.curState.board[i];
         this.squareNodes[i].style.backgroundColor = 'transparent';
       }
+      this.curState.players.forEach((playerName, idx) => {
+        this.playerInputs[idx].value = playerName;
+      });
+
     }
 
     // State changes that don't have direct render effects, but nonetheless updated in curState
@@ -25,7 +30,7 @@ class GameView {
 
     this.renderStatusMessage(newState);
     this.renderBoard(newState);
-    this.renderScore(newState);
+    this.renderScoreboard(newState);
   }
 
   renderStatusMessage({ turn, winnerFound, winningIdx, movesleft }) {
@@ -55,10 +60,13 @@ class GameView {
     }
   }
 
-  renderScore({ score }) {
+  renderScoreboard({ score, players }) {
     this.curState.score = [...score];
+    this.curState.players = [...players];
     this.xScoreDisplay.innerText = this.curState.score[0];
     this.oScoreDisplay.innerText = this.curState.score[1];
+    this.playerInputs[0].value = players[0];
+    this.playerInputs[1].value = players[1];
   }
 
   getBoardChanges(oldBoard, newBoard) {

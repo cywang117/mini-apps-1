@@ -9,28 +9,36 @@
 </head>
 
 <body>
-  <h1>Tic-Tac-Toe</h1>
-  <div id="info">
+  <div id="app">
+    <h1>Tic-Tac-Toe</h1>
     <p id="status">X's turn</p>
-    <div>
-      <p class="score">X: <span id="x">0</span></p>
-      <p class="score">O: <span id="o">0</span></p>
+    <div id="board">
+      <div class="square" id="sq-0"></div>
+      <div class="square" id="sq-1"></div>
+      <div class="square" id="sq-2"></div>
+      <div class="square" id="sq-3"></div>
+      <div class="square" id="sq-4"></div>
+      <div class="square" id="sq-5"></div>
+      <div class="square" id="sq-6"></div>
+      <div class="square" id="sq-7"></div>
+      <div class="square" id="sq-8"></div>
     </div>
-  </div>
-  <div id="board">
-    <div class="square" id="sq-0"></div>
-    <div class="square" id="sq-1"></div>
-    <div class="square" id="sq-2"></div>
-    <div class="square" id="sq-3"></div>
-    <div class="square" id="sq-4"></div>
-    <div class="square" id="sq-5"></div>
-    <div class="square" id="sq-6"></div>
-    <div class="square" id="sq-7"></div>
-    <div class="square" id="sq-8"></div>
-  </div>
-  <div id="controls">
-    <button onclick="game.resetBoard()">Reset Board</button>
-    <button onclick="game.resetScores()">Reset Scores</button>
+    <div id="scoreboard">
+      <h4>Scores</h4>
+      <p id="name-info">Click a name to edit</p>
+      <div class="player-score">
+        <input type="text" class="player-input" id="input0" />
+        <p> - X: <span id="x">0</span></p>
+      </div>
+      <div class="player-score">
+        <input type="text" class="player-input" id="input1"/>
+        <p> - O: <span id="o">0</span></p>
+      </div>
+    </div>
+    <div id="controls">
+      <button onclick="game.resetBoard()">Reset Board</button>
+      <button onclick="game.resetScores()">Reset Scores</button>
+    </div>
   </div>
   <script src="model.js"></script>
   <script src="view.js"></script>

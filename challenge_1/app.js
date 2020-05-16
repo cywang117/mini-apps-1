@@ -24,7 +24,8 @@ class Game {
 
   resetScores() {
     this.View = new GameView();
-    this.Model = new GameModel(this.View);
+    let players = this.Model.getPlayers();
+    this.Model = new GameModel(this.View, players[0], [0, 0], players);
     this.Controller.Model = this.Model;
   }
 }
@@ -37,5 +38,9 @@ window.onload = () => {
   // Setup click handlers
   for (let node of game.View.squareNodes) {
     node.onclick = game.Controller.handleClick;
+  }
+
+  for (let input of game.View.playerInputs) {
+    input.addEventListener('focusout', game.Controller.handleInputFocusOut);
   }
 };

@@ -9,8 +9,6 @@ This README lists specs completed as specified on GLearn.
 * [Checkers](#challenge-5-checkers)
 * [Battleship](#challenge-6-battleship)
 
----
-
 ## Challenge 1: Tic Tac Toe
 - [x] __BMR__
 
@@ -32,7 +30,7 @@ This README lists specs completed as specified on GLearn.
 
 <br/>
 
-- [ ] Let each player (X vs. O) enter their name. Display this name next to the player's symbol (X vs. O).
+- [x] Let each player (X vs. O) enter their name. Display this name next to the player's symbol (X vs. O).
 
 <br/>
 

@@ -1,5 +1,5 @@
 class GameModel {
-  constructor(view, turn = 'X', score = [0, 0], players = ['X', 'O']) {
+  constructor(view, turn = 'Player 1', score = [0, 0], players = ['Player 1', 'Player 2']) {
     this.View = view;
     this.winningIdxs = [
       [0, 1, 2],
@@ -69,23 +69,33 @@ class GameModel {
   }
 
   // Setters
-  setState(squareId) {
+  setState(squareId, players) {
     // Given a changed square id in the board, update Model state,
     // handling internal state changes, then rendering
 
-    // Update board state & check winner
-    let [curPlayer, curIdx] = this.getCurrentPlayerAndIdx();
-    let [nxtPlayer, nxtIdx] = this.getNextPlayerAndIdx();
-    this.state.board[squareId] = curIdx === 0 ? 'X' : 'O';
-    let winnerIdxIfPresent = this.getWinner(this.state.board);
-    if (winnerIdxIfPresent.length) {
-      this.state.winnerFound = true;
-      this.state.winningIdx = winnerIdxIfPresent;
-      this.state.score[curIdx]++;
-    } else {
-      // If no winner, toggle turn & decrement moves
-      this.state.turn = nxtPlayer;
-      this.state.movesLeft--;
+    // Update player & turn names if changed
+    if (players !== undefined && players.some((player, idx) => this.state.players[idx] !== player)) {
+      let changedPlayerIdx = this.state.players.indexOf(this.state.turn);
+      this.state.players = [...players];
+      this.state.turn = this.state.players[changedPlayerIdx];
+      console.log('Player name changed')
+    }
+
+    if (squareId !== undefined) {
+      // Update board state & check winner
+      let [curPlayer, curIdx] = this.getCurrentPlayerAndIdx();
+      let [nxtPlayer, nxtIdx] = this.getNextPlayerAndIdx();
+      this.state.board[squareId] = curIdx === 0 ? 'X' : 'O';
+      let winnerIdxIfPresent = this.getWinner(this.state.board);
+      if (winnerIdxIfPresent.length) {
+        this.state.winnerFound = true;
+        this.state.winningIdx = winnerIdxIfPresent;
+        this.state.score[curIdx]++;
+      } else {
+        // If no winner, toggle turn & decrement moves
+        this.state.turn = nxtPlayer;
+        this.state.movesLeft--;
+      }
     }
 
     this.View.render({ ...this.state });
