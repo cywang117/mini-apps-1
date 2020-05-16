@@ -111,11 +111,11 @@ This README lists specs completed as specified on GLearn.
 
 <br/>
 
-- [ ] Add a field to the CSV report that contains a unique identifier (an auto-incrementing integer is fine) for each row of the CSV report.
+- [x] Add a field to the CSV report that contains a unique identifier (an auto-incrementing integer is fine) for each row of the CSV report.
 
 <br/>
 
-- [ ] Add another field to the CSV report that specifies the ID of the parent record. For top-level objects in the JSON, this field will be empty. For any child objects in the JSON hierarchy, this field will refer to the unique identifier in the prior step.
+- [x] Add another field to the CSV report that specifies the ID of the parent record. For top-level objects in the JSON, this field will be empty. For any child objects in the JSON hierarchy, this field will refer to the unique identifier in the prior step.
 
 <br/>
 
