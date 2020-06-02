@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { CssBaseline } from '@material-ui/core';
+import { withStyles } from '@material-ui/core/styles';
 
 import Nav from './Nav';
 import Home from './Home';
@@ -8,6 +9,20 @@ import UserForm from './UserForm';
 import ShippingForm from './ShippingForm';
 import PaymentForm from './PaymentForm';
 import NotFound from './NotFound';
+
+const styles = theme => ({
+  '@global': {
+    body: {
+      height: '100vh'
+    },
+    html: {
+      height: '100vh'
+    },
+    '#app': {
+      height: '100%'
+    }
+  }
+});
 
 const App = () => {
   return (
@@ -38,5 +53,5 @@ const App = () => {
   )
 };
 
-export default App;
+export default withStyles(styles)(App);
 
