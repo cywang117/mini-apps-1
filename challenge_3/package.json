@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "client-dev": "concurrently \"webpack -d -w\" \"live-server public --wait=300 --ignore=node_modules\" --kill-others",
-    "server-dev": "nodemon server.js"
+    "server-dev": "nodemon server/index.js"
   },
   "keywords": [],
   "author": "",
@@ -13,6 +13,7 @@
   "dependencies": {
     "@material-ui/core": "^4.10.0",
     "babel-plugin-transform-imports": "^2.0.0",
+    "bcrypt": "^4.0.1",
     "express": "^4.17.1",
     "mongoose": "^5.9.16",
     "react": "^16.13.1",
