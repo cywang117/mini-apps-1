@@ -20,6 +20,27 @@ const styles = theme => ({
     },
     '#app': {
       height: '100%'
+    },
+    '.centeredFlexBox': {
+      height: 'calc(100% - 56px - 48px)',
+      [theme.breakpoints.up('sm')]: {
+        height: 'calc(100% - 64px - 48px)'
+      },
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'center'
+    },
+    '.formFlex': {
+      display: 'flex',
+      flexDirection: 'column',
+      margin: '0 auto',
+      paddingTop: theme.spacing(2)
+    },
+    '.white': {
+      color: '#fff'
+    },
+    '.selected': {
+      textDecoration: 'underline'
     }
   }
 });
@@ -35,7 +56,7 @@ const App = () => {
           <Route exact path="/">
             <Home />
           </Route>
-          <Route exact path="/checkout/user">
+          <Route exact path="/checkout/account">
             <UserForm />
           </Route>
           <Route exact path="/checkout/shipping">
