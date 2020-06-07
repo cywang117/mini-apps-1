@@ -61,6 +61,34 @@ router.post('/checkout/cc', async (req, res) => {
   }
 });
 
+// Summary page info
+router.get('/checkout/summary/:email', async (req, res) => {
+  try {
+    let accountIfExists = await ensureUniqueEmail(req.params);
+    if (accountIfExists) {
+      let response = {
+        name: accountIfExists.name,
+        email: accountIfExists.email,
+        phone: accountIfExists.phone,
+        line1: accountIfExists.address.line1,
+        line2: accountIfExists.address.line2,
+        city: accountIfExists.address.city,
+        state: accountIfExists.address.state,
+        zip: accountIfExists.address.zip,
+        cardNoLength: accountIfExists.cc.cardNo.toString().length,
+        cardNoLast4: accountIfExists.cc.cardNo.toString().slice(-4),
+        billingZip: accountIfExists.cc.billingZip
+      };
+      res.status(201).json(response);
+    } else {
+      res.status(404).json({ error: 'Account does not exist' });
+    }
+  } catch (e) {
+    console.error(e);
+    res.sendStatus(500);
+  }
+});
+
 // For react-router
 app.get('*', (req, res) => {
   res.sendFile(path.resolve(__dirname, '..', 'public', 'index.html'));

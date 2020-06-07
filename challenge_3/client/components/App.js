@@ -8,6 +8,7 @@ import Home from './Home';
 import UserForm from './UserForm';
 import ShippingForm from './ShippingForm';
 import PaymentForm from './PaymentForm';
+import Summary from './Summary';
 import NotFound from './NotFound';
 
 const styles = theme => ({
@@ -78,6 +79,9 @@ const App = () => {
           </Route>
           <Route exact path="/checkout/payment">
             <PaymentForm account={account} />
+          </Route>
+          <Route exact path="/checkout/summary">
+            <Summary account={account} />
           </Route>
           <Route path="*">
             <NotFound />

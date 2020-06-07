@@ -172,7 +172,7 @@ This README lists specs completed as specified on GLearn.
 ---
 
 ### Challenge 3: Multistep Checkout Experience
-- [ ] __BMR__
+- [x] __BMR__
 
 <br/>
 
@@ -180,11 +180,11 @@ This README lists specs completed as specified on GLearn.
 
 <br/>
 
-- [ ] Don't allow the user to proceed until all the required fields are filled in. Address line 2 should be optional. Be sure to display appropriate error messages to the user, so they know why they are not allowed to proceed.
+- [x] Don't allow the user to proceed until all the required fields are filled in. Address line 2 should be optional. Be sure to display appropriate error messages to the user, so they know why they are not allowed to proceed.
 
 <br/>
 
-- [ ] Validate the form fields. Don't allow the user to proceed to the next step and do not save the data until the fields are valid. Validation means that you must prevent the user from entering haha as the email address -- the email address have a valid data-shape. You'll have to decide which fields deserve validation and which do not. Be sure to display appropriate error messages to the user, so they know why they are not allowed to proceed.
+- [x] Validate the form fields. Don't allow the user to proceed to the next step and do not save the data until the fields are valid. Validation means that you must prevent the user from entering haha as the email address -- the email address have a valid data-shape. You'll have to decide which fields deserve validation and which do not. Be sure to display appropriate error messages to the user, so they know why they are not allowed to proceed.
 
 <br/>
 
