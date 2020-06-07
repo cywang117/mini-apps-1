@@ -1,24 +1,9 @@
 import React, { useState } from 'react';
-import { Typography, TextField, FormControl, InputLabel, Input, FormHelperText, Button, Tooltip, ClickAwayListener } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
+import { Typography, TextField, FormControl, InputLabel, Input, FormHelperText } from '@material-ui/core';
 import { useHistory } from 'react-router-dom';
+import NextButton from './NextButton';
 
-const useStyles = makeStyles((theme) => ({
-  halfWidthInput: {
-    width: '24ch'
-  },
-  inlineFlex: {
-    display: 'flex',
-    justifyContent: 'space-between'
-  },
-  centerFlex: {
-    display: 'flex',
-    justifyContent: 'center'
-  }
-}));
-
-const UserForm = () => {
-  const classes = useStyles();
+const UserForm = ({ account, setAccount }) => {
   const history = useHistory();
 
   /**************************
@@ -59,7 +44,7 @@ const UserForm = () => {
   });
 
   const [tooltipOpen, setTooltipOpen] = useState(false);
-  const [tooltipMessage, setTooltipMessage] = useState('Please ensure all required fields are correctly filled in.')
+  const [tooltipMessage, setTooltipMessage] = useState('');
 
 
   /******************************
@@ -165,10 +150,13 @@ const UserForm = () => {
             setTooltipOpen(true);
             setTooltipMessage(res.error);
           } else {
+            setAccount(values.email);
             history.push('/checkout/shipping');
           }
-        });
+        })
+        .catch(console.error);
     } else {
+      setTooltipMessage('Please ensure all required fields are correctly filled in.');
       setTooltipOpen(true);
     }
   };
@@ -186,11 +174,11 @@ const UserForm = () => {
     <div className="centeredFlexBox">
       <Typography variant="h6" align="center">Create an Account</Typography>
       <form noValidate autoComplete="off" className="formFlex">
-        <div className={classes.inlineFlex}>
+        <div className="spaceBetweenFlex">
           <TextField
             required
             id="firstName"
-            className={classes.halfWidthInput}
+            className="halfWidthInput"
             label="First name"
             variant="standard"
             margin="dense"
@@ -203,7 +191,7 @@ const UserForm = () => {
           <TextField
             required
             id="lastName"
-            className={classes.halfWidthInput}
+            className="halfWidthInput"
             label="Last name"
             variant="standard"
             margin="dense"
@@ -264,23 +252,12 @@ const UserForm = () => {
         />
       </form>
 
-      <div className={classes.centerFlex}>
-        <ClickAwayListener onClickAway={() => { setTooltipOpen(false); }}>
-          <Tooltip
-            arrow
-            title={tooltipMessage}
-            open={tooltipOpen}
-          >
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={handleNextClick}
-            >
-              Next
-            </Button>
-          </Tooltip>
-        </ClickAwayListener>
-      </div>
+      <NextButton
+        tooltipMessage={tooltipMessage}
+        tooltipOpen={tooltipOpen}
+        setTooltipOpen={setTooltipOpen}
+        handleNextClick={handleNextClick}
+      />
     </div>
   )
 };

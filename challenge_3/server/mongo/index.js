@@ -4,7 +4,7 @@ const { Address, CreditCard, User, Password } = require('./models');
 
 mongoose.connect(
     process.env.MONGODB_URI || 'mongodb://localhost/checkout',
-    { useNewUrlParser: true, useUnifiedTopology: true }
+    { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false }
   )
   .catch(console.error);
 

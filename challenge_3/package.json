@@ -12,6 +12,7 @@
   "license": "ISC",
   "dependencies": {
     "@material-ui/core": "^4.10.0",
+    "@material-ui/lab": "^4.0.0-alpha.55",
     "babel-plugin-transform-imports": "^2.0.0",
     "bcrypt": "^4.0.1",
     "express": "^4.17.1",
