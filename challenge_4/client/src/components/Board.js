@@ -1,13 +1,18 @@
 import React from 'react';
+import styled from 'styled-components';
 import Row from './Row';
 
-const Board = ({ board, setBoard }) => {
+const StyledBoard = styled.div`
+  margin-bottom: 20px;
+`;
+
+const Board = ({ board, handleClick }) => {
   return (
-    <React.Fragment>
+    <StyledBoard data-testid="game-board">
       {
-        board.map((row, idx) => <Row row={row} key={idx} />)
+        board.map((row, idx) => <Row row={row} rowIdx={idx} key={idx} handleClick={handleClick} />)
       }
-    </React.Fragment>
+    </StyledBoard>
   );
 }
 

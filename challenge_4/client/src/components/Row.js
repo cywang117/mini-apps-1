@@ -1,13 +1,26 @@
 import React from 'react';
+import styled from 'styled-components';
 import Square from './Square';
 
-const Row = ({ row }) => {
+const FlexRow = styled.div`
+  display: flex;
+`;
+
+const Row = ({ row, rowIdx, handleClick }) => {
   return (
-    <React.Fragment>
+    <FlexRow>
       {
-        row.map((square, idx) => <Square display={square} key={idx} />)
+        row.map((square, idx) => (
+          <Square
+            display={square}
+            rowIdx={rowIdx}
+            colIdx={idx}
+            key={idx}
+            handleClick={handleClick}
+          />
+        ))
       }
-    </React.Fragment>
+    </FlexRow>
   );
 }
 
