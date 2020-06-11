@@ -1,10 +1,23 @@
+const webpack = require('webpack');
 const path = require('path');
 
 module.exports = {
-  entry: path.resolve(__dirname, 'client', 'src', 'index.js'),
+  mode: 'development',
+  entry: [
+    path.resolve(__dirname, 'client', 'src', 'index.js')
+  ],
   output: {
     path: path.resolve(__dirname, 'client', 'dist'),
-    filename: 'bundle.js'
+    filename: 'bundle.js',
+    publicPath: '/'
+  },
+  devtool: 'inline-source-map',
+  devServer: {
+    contentBase: './client/dist',
+    compress: true,
+    proxy: {
+      '/': 'http://localhost:3000'
+    }
   },
   module: {
     rules: [

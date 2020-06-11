@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "server-dev": "nodemon server/index.js",
-    "client-dev": "webpack -d -w",
+    "client-dev": "webpack-dev-server --mode development --hot",
     "start": "node server/index.js"
   },
   "keywords": [],
@@ -16,9 +16,9 @@
     "@babel/preset-env": "^7.10.2",
     "@babel/preset-react": "^7.10.1",
     "babel-loader": "^8.1.0",
-    "gulp": "^4.0.2",
     "webpack": "^4.43.0",
-    "webpack-cli": "^3.3.11"
+    "webpack-cli": "^3.3.11",
+    "webpack-dev-server": "^3.11.0"
   },
   "dependencies": {
     "express": "^4.17.1",
