@@ -6,9 +6,9 @@ const FlexRow = styled.div`
   display: flex;
 `;
 
-const Row = ({ row, rowIdx, handleClick }) => {
+const Row = ({ row, rowIdx, handleClick, testid }) => {
   return (
-    <FlexRow>
+    <FlexRow data-testid={testid}>
       {
         row.map((square, idx) => (
           <Square

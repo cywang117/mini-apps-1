@@ -17,7 +17,11 @@ const Slot = styled.div`
 
 const Square = ({ display, rowIdx, colIdx, handleClick }) => {
   return (
-    <Slot display={display} onClick={(e) => handleClick(e, rowIdx, colIdx)} />
+    <Slot
+      display={display}
+      onClick={(e) => { handleClick(e, rowIdx, colIdx) }}
+      data-testid={`game-sq-${rowIdx}${colIdx}`}
+    />
   );
 }
 

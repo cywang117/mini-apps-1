@@ -89,13 +89,41 @@ test.before(() => render(<App />));
 test.afterEach(cleanup);
 
 test('Smoke test - renders correctly', t => {
+  // Title
   t.notThrows(() => screen.getByText('Connect Four'));
-  let scoreDisplays = screen.getAllByText(/Player\s\d\:\s\d+/);
-  t.notThrows(() => scoreDisplays);
-  t.is(scoreDisplays.length, 2);
-  t.notThrows(() => screen.getByText('Player 1\'s turn!'));
-  // TODO: Test that board exists & has appropriate number of squares
 
+  // Scoreboard
+  try {
+    let scoreDisplays = screen.getAllByText(/Player\s\d\:\s\d+/);
+    t.notThrows(() => scoreDisplays);
+    t.is(scoreDisplays.length, 2);
+  } catch(e) {
+    t.fail(e.message);
+  }
+
+  // Initial message
+  t.notThrows(() => screen.getByText('Player 1\'s turn!'));
+
+  // Game board
+  t.notThrows(() => screen.getByTestId('game-board'));
+  // Rows
+  try {
+    let rows = screen.getAllByTestId(/game-row-\d/);
+    t.notThrows(() => rows);
+    t.is(rows.length, 6);
+  } catch(e) {
+    t.fail(e.message);
+  }
+  // Squares
+  try {
+    let squares = screen.getAllByTestId(/game-sq-\d{2}/);
+    t.notThrows(() => squares);
+    t.is(squares.length, 42);
+  } catch(e) {
+    t.fail(e.message);
+  }
+
+  // 2 reset buttons
   let resetButtons = screen.getAllByRole('button');
   t.notThrows(() => resetButtons);
   t.is(resetButtons.length, 2);

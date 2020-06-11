@@ -10,7 +10,7 @@ const Board = ({ board, handleClick }) => {
   return (
     <StyledBoard data-testid="game-board">
       {
-        board.map((row, idx) => <Row row={row} rowIdx={idx} key={idx} handleClick={handleClick} />)
+        board.map((row, idx) => <Row row={row} rowIdx={idx} key={idx} handleClick={handleClick} testid={`game-row-${idx}`} />)
       }
     </StyledBoard>
   );
