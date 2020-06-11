@@ -225,7 +225,7 @@ This README lists specs completed as specified on GLearn.
 ---
 
 ### Challenge 4: Connect Four
-- [ ] __BMR__
+- [x] __BMR__
 
 <br/>
 
@@ -245,7 +245,7 @@ This README lists specs completed as specified on GLearn.
 
 <br/>
 
-- [ ] Add a button to restart the game.
+- [x] Add a button to restart the game.
 
 <br/>
 
@@ -253,7 +253,7 @@ This README lists specs completed as specified on GLearn.
 
 <br/>
 
-- [ ] Keep a tally of the number of times Red vs. Black won a game. Refreshing the page should reset the tally.
+- [x] Keep a tally of the number of times Red vs. Black won a game. Refreshing the page should reset the tally.
 
 <br/>
 
@@ -261,11 +261,11 @@ This README lists specs completed as specified on GLearn.
 
 <br/>
 
-- [ ] If not already done, refactor your app so that all game state is self-contained in one object or module. It is ok for this module to live in the same app.js file as the rest of your code. This will simplify your testing. Add more tests if needed.
+- [x] If not already done, refactor your app so that all game state is self-contained in one object or module. It is ok for this module to live in the same app.js file as the rest of your code. This will simplify your testing. Add more tests if needed.
 
 <br/>
 
-- [ ] If not done, apply CSS styling to make your game look more realistic. Use an external style sheet.
+- [x] If not done, apply CSS styling to make your game look more realistic. Use an external style sheet.
 
 <br/>
 
@@ -281,7 +281,7 @@ This README lists specs completed as specified on GLearn.
 
 <br/>
 
-- [ ] If you used a table for your game board, refactor to use divs instead. CSS will be necessary to align your elements correctly. If not already done so, refactor to use flex-box layout management.
+- [x] If you used a table for your game board, refactor to use divs instead. CSS will be necessary to align your elements correctly. If not already done so, refactor to use flex-box layout management.
 
 <br/>
 
