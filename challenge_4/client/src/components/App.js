@@ -37,6 +37,7 @@ const StyledButton = styled.button`
   background: none;
   border: 1px solid black;
   font-family: inherit;
+  cursor: pointer;
 `;
 
 const App = () => {
@@ -72,12 +73,11 @@ const App = () => {
       turn === 'Player 1' ? newScore[0]++ : newScore[1]++;
       setScore(newScore);
       document.addEventListener('click', resetBoard);
-    } else {
-      document.removeEventListener('click', resetBoard);
     }
   }, [hasWinner]);
 
   const resetBoard = (e) => {
+    document.removeEventListener('click', resetBoard);
     setBoard(initialBoard);
   }
 
