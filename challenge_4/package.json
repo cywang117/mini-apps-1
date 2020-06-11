@@ -4,6 +4,7 @@
   "description": "",
   "main": "server.js",
   "scripts": {
+    "test": "ava -v --fail-fast",
     "server-dev": "nodemon server/index.js",
     "client-dev": "webpack-dev-server --mode development --hot",
     "start": "node server/index.js"
@@ -11,11 +12,29 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
+  "ava": {
+    "require": [
+      "@babel/core",
+      "@babel/register",
+      "./test/_setup-browser-env.js"
+    ],
+    "babel": {
+      "extensions": [
+        "js",
+        "jsx"
+      ]
+    }
+  },
   "devDependencies": {
+    "@ava/babel": "^1.0.1",
     "@babel/core": "^7.10.2",
     "@babel/preset-env": "^7.10.2",
     "@babel/preset-react": "^7.10.1",
+    "@babel/register": "^7.10.1",
+    "@testing-library/react": "^10.2.1",
+    "ava": "^3.8.2",
     "babel-loader": "^8.1.0",
+    "browser-env": "^3.3.0",
     "webpack": "^4.43.0",
     "webpack-cli": "^3.3.11",
     "webpack-dev-server": "^3.11.0"
