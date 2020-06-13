@@ -6,7 +6,7 @@ const FlexRow = styled.div`
   display: flex;
 `;
 
-const Row = ({ row, rowIdx, handleClick, testid }) => {
+const Row = ({ row, rowIdx, testid }) => {
   return (
     <FlexRow data-testid={testid}>
       {
@@ -16,7 +16,6 @@ const Row = ({ row, rowIdx, handleClick, testid }) => {
             rowIdx={rowIdx}
             colIdx={idx}
             key={idx}
-            handleClick={handleClick}
           />
         ))
       }

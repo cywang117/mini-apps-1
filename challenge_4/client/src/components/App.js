@@ -44,8 +44,8 @@ const App = () => {
   // 6 rows, 7 cols
   let initialBoard = new Array(6).fill(new Array(7).fill('transparent'));
   let playerColors = {
-    'Player 1': ['rgb(211, 52, 52)', 'rgba(211, 52, 52, 0.5)'],
-    'Player 2': ['rgb(80, 80, 80)', 'rgba(80, 80, 80, 0.5)']
+    'Player 1': 'rgb(211, 52, 52)',
+    'Player 2': 'rgb(80, 80, 80)'
   };
 
   const [board, setBoard] = useState(initialBoard);
@@ -54,16 +54,18 @@ const App = () => {
   const [turn, setTurn] = useState('');
 
   useEffect(() => {
-    if (JSON.stringify(board) !== JSON.stringify(initialBoard)) {
+    setHasWinner(false);
+    setTurn('Player 1');
+  }, []);
+
+  useEffect(() => {
+    if (!hasWinner && JSON.stringify(board) !== JSON.stringify(initialBoard)) {
       let winnerExists = checkWinner(board);
       if (winnerExists) {
         setHasWinner(true);
       } else {
         turn === 'Player 1' ? setTurn('Player 2') : setTurn('Player 1');
       }
-    } else {
-      setHasWinner(false);
-      setTurn('Player 1');
     }
   }, [board]);
 
@@ -76,19 +78,35 @@ const App = () => {
     }
   }, [hasWinner]);
 
+  const updateBoard = (rowIdx, colIdx, color) => {
+    // Deep clone board to avoid mutating current state
+    let newBoard = board.map(row => row.map(sq => sq));
+    newBoard[rowIdx][colIdx] = color;
+    setBoard(newBoard);
+  }
+
   const resetBoard = (e) => {
     document.removeEventListener('click', resetBoard);
     setBoard(initialBoard);
+    setTurn('Player 1');
+    setHasWinner(false);
   }
 
-  const handleSlotClick = (e, rowIdx, colIdx) => {
-    if (!hasWinner) {
-      if (board[rowIdx][colIdx] === 'transparent') {
-        // Deep clone board to avoid mutating current state
-        let newBoard = board.map(row => row.map(sq => sq));
-        newBoard[rowIdx][colIdx] = playerColors[turn][0];
-        setBoard(newBoard);
+  const resetScore = (e) => {
+    setScore([0, 0]);
+  }
+
+  const handleSlotClick = (colIdx) => {
+    // Get lowest row number in column
+    let lowestRow = null;
+    for (let i = 5; i >= 0; i--) {
+      if (board[i][colIdx] === 'transparent' && lowestRow === null) {
+        lowestRow = i;
+        break;
       }
+    }
+    if (!hasWinner && lowestRow !== null) {
+      updateBoard(lowestRow, colIdx, playerColors[turn]);
     }
   }
 
@@ -101,7 +119,7 @@ const App = () => {
       <Board board={board} handleClick={handleSlotClick} />
       <FlexDiv>
         <StyledButton onClick={resetBoard}>Reset Board</StyledButton>
-        <StyledButton onClick={() => setScore([0, 0])}>Reset Scores</StyledButton>
+        <StyledButton onClick={resetScore}>Reset Scores</StyledButton>
       </FlexDiv>
 
     </React.Fragment>
