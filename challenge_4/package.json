@@ -4,7 +4,7 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "test": "cross-env DEBUG_PRINT_LIMIT=0 ava -v --fail-fast",
+    "test": "cross-env DEBUG_PRINT_LIMIT=0 ava -s -w --fail-fast",
     "server-dev": "nodemon server/index.js",
     "client-dev": "webpack-dev-server --mode development --hot",
     "start": "node server/index.js"
