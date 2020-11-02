@@ -1,6 +1,9 @@
 # Mini Apps 1 Sprint
 This README lists specs completed for each mini application, created with software development best practices in mind.
 
+## Technologies Used
+Node, Express, React, ReactDOM, Bcrypt, Material UI, MongoDB, Mongoose, Ava, React Testing Library, Babel, Webpack, Styled-Components
+
 ## Table of Contents
 * [Challenge 1: Tic Tac Toe](#challenge-1-tic-tac-toe)
 * [Challenge 2: CSV Report Generator](#challenge-2-csv-report-generator)
