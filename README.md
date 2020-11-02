@@ -1,5 +1,5 @@
-# Hack Reactor: Mini Apps 1 Sprint
-This README lists specs completed as specified on GLearn.
+# Mini Apps 1 Sprint
+This README lists specs completed for each mini application, created with software development best practices in mind.
 
 ## Table of Contents
 * [Tic Tac Toe](#challenge-1-tic-tac-toe)
